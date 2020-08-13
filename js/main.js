@@ -3,8 +3,9 @@
 console.clear();
 
 {
-  let year = 2020;
-  let month = 4; //5月
+  const today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth();
 
 
   function getCalendarHead() {
@@ -38,6 +39,11 @@ console.clear();
       });
     }
 
+    if (year === today.getFullYear() && month === today.getMonth()) {
+      dates[today.getDate() - 1].isToday = true;
+    }
+
+
     return dates;
   }
 
@@ -56,17 +62,21 @@ console.clear();
    return dates;
  }
 
- function createCalendar() {
-   const tbody = document.querySelector('tbody');
+ function clearCalendar() {
+  const tbody = document.querySelector('tbody');
 
-   while (tbody.firstChild) {
-     tbody.removeChild(tbody.firstChild);
-   }
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
+ }
 
-   const title = `${year}/${String(month + 1).padStart(2, '0')}`;
-   document.getElementById('title').textContent = title;
+ function renderTitle() {
+  const title = `${year}/${String(month + 1).padStart(2, '0')}`;
+  document.getElementById('title').textContent = title;
+ }
 
-   const dates = [
+ function renderWeeks() {
+  const dates = [
     ...getCalendarHead(),
     ...getCalendarBody(),
     ...getCalendarTail(),
@@ -98,6 +108,13 @@ console.clear();
    });
  }
 
+
+ function createCalendar() {
+   clearCalendar();
+   renderTitle();
+   renderWeeks();
+ }
+
  document.getElementById('prev').addEventListener('click', () => {
    month--;
    if (month < 0) {
@@ -119,5 +136,4 @@ console.clear();
  });
 
   createCalendar();
-
 }
