@@ -6,13 +6,6 @@ console.clear();
   const year = 2020;
   const month = 4; //5月
 
-  function getCalendarTail() {
-    const dates = [];
-
-    for (let i = 1; i < 7; i++) {
-      dates.push();
-    }
-  }
 
   function getCalendarHead() {
     const dates = [];
@@ -49,6 +42,22 @@ console.clear();
 
   }
 
-  getCalendarHead();
+  function getCalendarTail() {
+    const dates = [];
+    const lastDay = new Date(year, month + 1, 0).getDay();
+
+    for (let i = 1; i < 7 - lastDay; i++) {
+      dates.push({
+      date: i,
+      isToday: false,
+      isDisabled: true,
+     });
+    }
+   console.log(dates);
+
+ }
+
+  // getCalendarHead();
   // getCalendarBody();
+  getCalendarTail();
 }
